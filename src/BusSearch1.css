@@ -16,21 +16,24 @@
 
 
 /* =========================================
-   SEARCH BOX
+   SEARCH AREA INSIDE JOURNEY
 ========================================= */
 
-.bus-search-box {
+.journey-search-area {
+    position: relative;
+
     width: 100%;
 
-    padding: 16px;
+    margin-top: 28px;
+    padding-top: 24px;
 
-    border: 1px solid #e5e7eb;
-    border-radius: 22px;
-
-    background: #f9fafb;
-
-    box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.06);
+    border-top: 1px solid
+        rgba(
+            118,
+            255,
+            199,
+            0.12
+        );
 }
 
 .bus-search-grid {
@@ -49,19 +52,11 @@
 
 .from-to-wrapper {
     position: relative;
-
     display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
+    grid-template-columns: 1fr 1fr;
     gap: 8px;
-
     grid-column: span 2;
-}
-
-.city-field-wrapper {
-    position: relative;
+    transform: translateY(37px);
 }
 
 .city-field {
@@ -222,45 +217,22 @@
 
 .swap-button {
     position: absolute;
-
-    top: 50%;
+    top: calc(30% + 4px);
     left: 50%;
-
     z-index: 20;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     width: 36px;
     height: 36px;
-
-    transform:
-        translate(-50%, -50%);
-
+    transform: translate(-50%, -50%);
     border: 1px solid #e5e7eb;
-
     border-radius: 50%;
-
     background: #ffffff;
-
     color: #4b5563;
-
-    box-shadow:
-        0 4px 10px rgba(
-            0,
-            0,
-            0,
-            0.1
-        );
-
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     cursor: pointer;
-
-    transition:
-        background 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .swap-button:hover {
@@ -323,15 +295,6 @@
         border-color 0.2s ease;
 }
 
-.women-toggle:hover {
-    border-color: #d1d5db;
-}
-
-.women-toggle-active {
-    border-color: #bbf7d0;
-
-    background: #f0fdf4;
-}
 
 .women-text {
     color: #374151;
@@ -340,9 +303,6 @@
     font-weight: 600;
 }
 
-.women-text-active {
-    color: #15803d;
-}
 
 
 /* =========================================
@@ -363,9 +323,6 @@
         background 0.2s ease;
 }
 
-.toggle-switch-active {
-    background: #16a34a;
-}
 
 .toggle-circle {
     position: absolute;
@@ -522,9 +479,6 @@
         border-color 0.2s ease;
 }
 
-.quick-date-button:hover {
-    background: #f3f4f6;
-}
 
 .quick-date-active {
     border-color: #16a34a;
@@ -789,14 +743,7 @@
 .journey-preview {
     position: relative;
 
-    display: grid;
-
-    grid-template-columns:
-        1fr 1.5fr auto;
-
-    align-items: center;
-
-    gap: 32px;
+    display: block;
 
     width: 100%;
 
@@ -859,7 +806,7 @@
                 0.2
             );
 
-    overflow: hidden;
+    overflow: visible;
 
     transition:
         transform 0.3s ease,
@@ -893,6 +840,24 @@
                 0,
                 0.25
             );
+}
+
+
+/* =========================================
+   JOURNEY TOP ROW
+========================================= */
+
+.journey-top-row {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1.5fr auto;
+
+    align-items: center;
+
+    gap: 32px;
+
+    width: 100%;
 }
 
 
@@ -1127,7 +1092,6 @@
 
     0% {
         left: 0;
-
         opacity: 0.35;
     }
 
@@ -1297,23 +1261,9 @@
 
 @media (max-width: 1100px) {
 
-    .bus-search-grid {
+    .journey-top-row {
         grid-template-columns:
             1fr;
-    }
-
-    .from-to-wrapper {
-        grid-column: span 1;
-    }
-
-    .date-section {
-        width: 100%;
-    }
-
-    .journey-preview {
-        grid-template-columns:
-            1fr;
-
         gap: 28px;
     }
 
@@ -1328,6 +1278,19 @@
     .journey-button {
         width: 100%;
     }
+
+    .bus-search-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .from-to-wrapper {
+        grid-column: span 1;
+    }
+
+    .date-section {
+        width: 100%;
+    }
 }
 
 
@@ -1337,10 +1300,17 @@
         padding: 14px 10px 24px;
     }
 
-    .bus-search-box {
-        padding: 10px;
+    .journey-preview {
+        min-height: auto;
 
-        border-radius: 18px;
+        padding: 20px 16px;
+
+        border-radius: 22px;
+    }
+
+    .journey-search-area {
+        margin-top: 22px;
+        padding-top: 20px;
     }
 
     .from-to-wrapper {
@@ -1381,14 +1351,6 @@
     .calendar-popup {
         left: 0;
         right: 0;
-    }
-
-    .journey-preview {
-        min-height: auto;
-
-        padding: 20px 16px;
-
-        border-radius: 22px;
     }
 
     .preview-left {

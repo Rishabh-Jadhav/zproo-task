@@ -208,10 +208,7 @@ function BusSearch1() {
     const today = new Date();
 
     const tomorrowDate = new Date(today);
-
-    tomorrowDate.setDate(
-        today.getDate() + 1
-    );
+    tomorrowDate.setDate(today.getDate() + 1);
 
     /* =========================================
        DATE FORMAT
@@ -232,20 +229,16 @@ function BusSearch1() {
     };
 
     const todayString = formatDate(today);
-
-    const tomorrowString =
-        formatDate(tomorrowDate);
+    const tomorrowString = formatDate(tomorrowDate);
 
     /* =========================================
        STATES
     ========================================= */
 
     const [from, setFrom] = useState("");
-
     const [to, setTo] = useState("");
 
-    const [date, setDate] =
-        useState(todayString);
+    const [date, setDate] = useState(todayString);
 
     const [activeField, setActiveField] =
         useState<"from" | "to" | null>(null);
@@ -289,9 +282,7 @@ function BusSearch1() {
                 )
             ) {
                 setActiveField(null);
-
                 setCalendarOpen(false);
-
                 setShowYears(false);
             }
         };
@@ -360,7 +351,6 @@ function BusSearch1() {
         const currentFrom = from;
 
         setFrom(to);
-
         setTo(currentFrom);
     };
 
@@ -372,7 +362,6 @@ function BusSearch1() {
         setCalendarOpen(true);
 
         setActiveField(null);
-
         setShowYears(false);
 
         setCalendarMonth(
@@ -388,11 +377,8 @@ function BusSearch1() {
        SELECT DATE
     ========================================= */
 
-    const selectDate = (
-        newDate: Date
-    ) => {
-        const selected =
-            new Date(newDate);
+    const selectDate = (newDate: Date) => {
+        const selected = new Date(newDate);
 
         selected.setHours(
             0,
@@ -411,23 +397,17 @@ function BusSearch1() {
             0
         );
 
-        if (
-            selected <
-            todayOnly
-        ) {
+        if (selected < todayOnly) {
             return;
         }
 
-        setSelectedDate(
-            selected
-        );
+        setSelectedDate(selected);
 
         setDate(
             formatDate(selected)
         );
 
         setCalendarOpen(false);
-
         setShowYears(false);
     };
 
@@ -535,9 +515,7 @@ function BusSearch1() {
 
         let nextDay = 1;
 
-        while (
-            days.length < 42
-        ) {
+        while (days.length < 42) {
             days.push({
                 date: new Date(
                     calendarYear,
@@ -639,721 +617,747 @@ function BusSearch1() {
             >
 
                 {/* =========================================
-                    SEARCH BOX
-                ========================================= */}
-
-                <div className="bus-search-box">
-
-                    <div className="bus-search-grid">
-
-                        {/* =========================================
-                            FROM + TO
-                        ========================================= */}
-
-                        <div className="from-to-wrapper">
-
-                            {/* FROM */}
-
-                            <div className="city-field-wrapper">
-
-                                <div
-                                    className={`city-field ${
-                                        activeField ===
-                                        "from"
-                                            ? "city-field-active"
-                                            : ""
-                                    }`}
-                                >
-
-                                    <BusIcon />
-
-                                    <div className="city-input-content">
-
-                                        <div className="field-label">
-                                            FROM
-                                        </div>
-
-                                        <input
-                                            type="text"
-                                            value={from}
-                                            onChange={(event) => {
-                                                setFrom(
-                                                    event
-                                                        .target
-                                                        .value
-                                                );
-
-                                                setActiveField(
-                                                    "from"
-                                                );
-                                            }}
-                                            onFocus={() =>
-                                                setActiveField(
-                                                    "from"
-                                                )
-                                            }
-                                            placeholder="Enter departure city"
-                                            className="city-input"
-                                        />
-
-                                        <div className="field-helper">
-                                            Select departure
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                {/* FROM SUGGESTIONS */}
-
-                                {activeField ===
-                                    "from" &&
-                                    filteredFromCities.length >
-                                        0 && (
-                                        <div className="city-suggestions">
-
-                                            {filteredFromCities.map(
-                                                (
-                                                    city
-                                                ) => (
-                                                    <button
-                                                        key={`${city.city}-${city.state}`}
-                                                        type="button"
-                                                        onClick={() =>
-                                                            selectCity(
-                                                                city,
-                                                                "from"
-                                                            )
-                                                        }
-                                                        className="city-suggestion"
-                                                    >
-                                                        <MapPin
-                                                            size={
-                                                                17
-                                                            }
-                                                        />
-
-                                                        <div>
-                                                            <div className="suggestion-city">
-                                                                {
-                                                                    city.city
-                                                                }
-                                                            </div>
-
-                                                            <div className="suggestion-state">
-                                                                {
-                                                                    city.state
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                    </button>
-                                                )
-                                            )}
-
-                                        </div>
-                                    )}
-                            </div>
-
-                            {/* TO */}
-
-                            <div className="city-field-wrapper">
-
-                                <div
-                                    className={`city-field ${
-                                        activeField ===
-                                        "to"
-                                            ? "city-field-active"
-                                            : ""
-                                    }`}
-                                >
-
-                                    <BusIcon />
-
-                                    <div className="city-input-content">
-
-                                        <div className="field-label">
-                                            TO
-                                        </div>
-
-                                        <input
-                                            type="text"
-                                            value={to}
-                                            onChange={(event) => {
-                                                setTo(
-                                                    event
-                                                        .target
-                                                        .value
-                                                );
-
-                                                setActiveField(
-                                                    "to"
-                                                );
-                                            }}
-                                            onFocus={() =>
-                                                setActiveField(
-                                                    "to"
-                                                )
-                                            }
-                                            placeholder="Enter destination city"
-                                            className="city-input"
-                                        />
-
-                                        <div className="field-helper">
-                                            Select destination
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                {/* TO SUGGESTIONS */}
-
-                                {activeField ===
-                                    "to" &&
-                                    filteredToCities.length >
-                                        0 && (
-                                        <div className="city-suggestions">
-
-                                            {filteredToCities.map(
-                                                (
-                                                    city
-                                                ) => (
-                                                    <button
-                                                        key={`${city.city}-${city.state}`}
-                                                        type="button"
-                                                        onClick={() =>
-                                                            selectCity(
-                                                                city,
-                                                                "to"
-                                                            )
-                                                        }
-                                                        className="city-suggestion"
-                                                    >
-                                                        <MapPin
-                                                            size={
-                                                                17
-                                                            }
-                                                        />
-
-                                                        <div>
-                                                            <div className="suggestion-city">
-                                                                {
-                                                                    city.city
-                                                                }
-                                                            </div>
-
-                                                            <div className="suggestion-state">
-                                                                {
-                                                                    city.state
-                                                                }
-                                                            </div>
-                                                        </div>
-                                                    </button>
-                                                )
-                                            )}
-
-                                        </div>
-                                    )}
-                            </div>
-
-                            {/* SWAP */}
-
-                            <button
-                                type="button"
-                                onClick={
-                                    swapLocations
-                                }
-                                title="Swap locations"
-                                className="swap-button"
-                            >
-                                <ArrowRightLeft
-                                    size={16}
-                                />
-                            </button>
-
-                        </div>
-
-                        {/* =========================================
-                            WOMEN ONLY + DATE
-                        ========================================= */}
-
-                        <div className="date-section">
-
-                            {/* WOMEN ONLY */}
-
-                            <div className="women-toggle-row">
-
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        setWomenOnly(
-                                            !womenOnly
-                                        )
-                                    }
-                                    className={`women-toggle ${
-                                        womenOnly
-                                            ? "women-toggle-active"
-                                            : ""
-                                    }`}
-                                >
-
-                                    <WomanIcon
-                                        active={
-                                            womenOnly
-                                        }
-                                    />
-
-                                    <span
-                                        className={`women-text ${
-                                            womenOnly
-                                                ? "women-text-active"
-                                                : ""
-                                        }`}
-                                    >
-                                        Women Only
-                                    </span>
-
-                                    <span
-                                        className={`toggle-switch ${
-                                            womenOnly
-                                                ? "toggle-switch-active"
-                                                : ""
-                                        }`}
-                                    >
-                                        <span
-                                            className={`toggle-circle ${
-                                                womenOnly
-                                                    ? "toggle-circle-active"
-                                                    : ""
-                                            }`}
-                                        />
-                                    </span>
-
-                                </button>
-
-                            </div>
-
-                            {/* TRAVEL DATE */}
-
-                            <div className="date-field-wrapper">
-
-                                <div className="date-field">
-
-                                    <button
-                                        type="button"
-                                        onClick={
-                                            openCalendar
-                                        }
-                                        title="Select travel date"
-                                        className="calendar-icon-button"
-                                    >
-                                        <CalendarDays
-                                            size={20}
-                                            strokeWidth={
-                                                2
-                                            }
-                                        />
-                                    </button>
-
-                                    <button
-                                        type="button"
-                                        onClick={
-                                            openCalendar
-                                        }
-                                        className="date-text-button"
-                                    >
-
-                                        <span className="date-label">
-                                            TRAVEL DATE
-                                        </span>
-
-                                        <span className="date-value">
-
-                                            {date ===
-                                            todayString
-                                                ? "Today"
-                                                : date ===
-                                                  tomorrowString
-                                                ? "Tomorrow"
-                                                : selectedDate.toLocaleDateString(
-                                                      "en-IN",
-                                                      {
-                                                          day: "2-digit",
-                                                          month: "short",
-                                                          year: "numeric",
-                                                      }
-                                                  )}
-
-                                        </span>
-
-                                    </button>
-
-                                    {/* TODAY / TOMORROW */}
-
-                                    <div className="quick-date-buttons">
-
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setSelectedDate(
-                                                    new Date(
-                                                        today
-                                                    )
-                                                );
-
-                                                setDate(
-                                                    todayString
-                                                );
-                                            }}
-                                            className={`quick-date-button ${
-                                                date ===
-                                                todayString
-                                                    ? "quick-date-active"
-                                                    : ""
-                                            }`}
-                                        >
-                                            Today
-                                        </button>
-
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setSelectedDate(
-                                                    new Date(
-                                                        tomorrowDate
-                                                    )
-                                                );
-
-                                                setDate(
-                                                    tomorrowString
-                                                );
-                                            }}
-                                            className={`quick-date-button ${
-                                                date ===
-                                                tomorrowString
-                                                    ? "quick-date-active"
-                                                    : ""
-                                            }`}
-                                        >
-                                            Tomorrow
-                                        </button>
-
-                                    </div>
-
-                                </div>
-
-                                {/* =========================================
-                                    CALENDAR
-                                ========================================= */}
-
-                                {calendarOpen && (
-                                    <div className="calendar-popup">
-
-                                        {/* HEADER */}
-
-                                        <div className="calendar-header">
-
-                                            <button
-                                                type="button"
-                                                onClick={
-                                                    previousMonth
-                                                }
-                                                className="calendar-nav-button"
-                                            >
-                                                <ChevronLeft
-                                                    size={
-                                                        18
-                                                    }
-                                                />
-                                            </button>
-
-                                            <button
-                                                type="button"
-                                                onClick={() =>
-                                                    setShowYears(
-                                                        !showYears
-                                                    )
-                                                }
-                                                className="calendar-month-button"
-                                            >
-                                                {months[
-                                                    calendarMonth
-                                                ]}{" "}
-                                                {
-                                                    calendarYear
-                                                }
-
-                                                <ChevronDown
-                                                    size={
-                                                        15
-                                                    }
-                                                />
-                                            </button>
-
-                                            <button
-                                                type="button"
-                                                onClick={
-                                                    nextMonth
-                                                }
-                                                className="calendar-nav-button"
-                                            >
-                                                <ChevronRight
-                                                    size={
-                                                        18
-                                                    }
-                                                />
-                                            </button>
-
-                                        </div>
-
-                                        {/* YEARS */}
-
-                                        {showYears ? (
-                                            <div className="years-grid">
-
-                                                {years.map(
-                                                    (
-                                                        year
-                                                    ) => (
-                                                        <button
-                                                            key={
-                                                                year
-                                                            }
-                                                            type="button"
-                                                            onClick={() => {
-                                                                setCalendarYear(
-                                                                    year
-                                                                );
-
-                                                                setShowYears(
-                                                                    false
-                                                                );
-                                                            }}
-                                                            className={`year-button ${
-                                                                year ===
-                                                                calendarYear
-                                                                    ? "year-button-active"
-                                                                    : ""
-                                                            }`}
-                                                        >
-                                                            {
-                                                                year
-                                                            }
-                                                        </button>
-                                                    )
-                                                )}
-
-                                            </div>
-                                        ) : (
-                                            <>
-                                                {/* WEEK DAYS */}
-
-                                                <div className="week-days">
-
-                                                    {[
-                                                        "Sun",
-                                                        "Mon",
-                                                        "Tue",
-                                                        "Wed",
-                                                        "Thu",
-                                                        "Fri",
-                                                        "Sat",
-                                                    ].map(
-                                                        (
-                                                            day
-                                                        ) => (
-                                                            <div
-                                                                key={
-                                                                    day
-                                                                }
-                                                                className="week-day"
-                                                            >
-                                                                {
-                                                                    day
-                                                                }
-                                                            </div>
-                                                        )
-                                                    )}
-
-                                                </div>
-
-                                                {/* DAYS */}
-
-                                                <div className="calendar-days">
-
-                                                    {calendarDays.map(
-                                                        (
-                                                            item,
-                                                            index
-                                                        ) => {
-                                                            const past =
-                                                                isPastDate(
-                                                                    item.date
-                                                                );
-
-                                                            const selected =
-                                                                isSameDate(
-                                                                    item.date,
-                                                                    selectedDate
-                                                                );
-
-                                                            const isToday =
-                                                                isSameDate(
-                                                                    item.date,
-                                                                    today
-                                                                );
-
-                                                            return (
-                                                                <button
-                                                                    key={`${item.date.toISOString()}-${index}`}
-                                                                    type="button"
-                                                                    disabled={
-                                                                        past
-                                                                    }
-                                                                    onClick={() =>
-                                                                        selectDate(
-                                                                            item.date
-                                                                        )
-                                                                    }
-                                                                    className={`calendar-day ${
-                                                                        past
-                                                                            ? "calendar-day-past"
-                                                                            : selected
-                                                                            ? "calendar-day-selected"
-                                                                            : isToday
-                                                                            ? "calendar-day-today"
-                                                                            : item.currentMonth
-                                                                            ? "calendar-day-current"
-                                                                            : "calendar-day-other"
-                                                                    }`}
-                                                                >
-                                                                    {
-                                                                        item
-                                                                            .date
-                                                                            .getDate()
-                                                                    }
-                                                                </button>
-                                                            );
-                                                        }
-                                                    )}
-
-                                                </div>
-                                            </>
-                                        )}
-
-                                    </div>
-                                )}
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                {/* =========================================
                     SELECTED JOURNEY
                 ========================================= */}
 
                 <div className="journey-preview">
 
-                    {/* LEFT */}
+                    {/* =========================================
+                        TOP CONTENT
+                    ========================================= */}
 
-                    <div className="preview-left">
+                    <div className="journey-top-row">
 
-                        <div className="preview-vehicle">
-                            <BusIcon />
-                        </div>
+                        {/* LEFT */}
 
-                        <div>
+                        <div className="preview-left">
 
-                            <span className="preview-label">
-                                Selected Journey
-                            </span>
+                            <div className="preview-vehicle">
+                                <BusIcon />
+                            </div>
 
-                            <h3>
-                                Travel from{" "}
-                                <span>
-                                    {from ||
-                                        "Your City"}
+                            <div>
+
+                                <span className="preview-label">
+                                    Selected Journey
                                 </span>
 
-                                {" "}to{" "}
+                                <h3>
+                                    Travel from{" "}
+                                    <span>
+                                        {from ||
+                                            "Your City"}
+                                    </span>
 
-                                <span>
-                                    {to ||
-                                        "Destination"}
-                                </span>
-                            </h3>
+                                    {" "}to{" "}
 
-                        </div>
+                                    <span>
+                                        {to ||
+                                            "Destination"}
+                                    </span>
+                                </h3>
 
-                    </div>
-
-                    {/* ROUTE */}
-
-                    <div className="journey-route">
-
-                        <div className="route-point">
-
-                            <span className="route-dot" />
-
-                            <small>
-                                START
-                            </small>
+                            </div>
 
                         </div>
 
-                        <div className="route-line">
-                            <span className="route-moving-dot" />
+                        {/* ROUTE */}
+
+                        <div className="journey-route">
+
+                            <div className="route-point">
+
+                                <span className="route-dot" />
+
+                                <small>
+                                    START
+                                </small>
+
+                            </div>
+
+                            <div className="route-line">
+                                <span className="route-moving-dot" />
+                            </div>
+
+                            <div className="route-vehicle">
+                                <BusIcon />
+                            </div>
+
+                            <div className="route-line">
+                                <span className="route-moving-dot" />
+                            </div>
+
+                            <div className="route-point">
+
+                                <MapPin
+                                    size={21}
+                                />
+
+                                <small>
+                                    DESTINATION
+                                </small>
+
+                            </div>
+
                         </div>
 
-                        <div className="route-vehicle">
-                            <BusIcon />
-                        </div>
+                        {/* START JOURNEY */}
 
-                        <div className="route-line">
-                            <span className="route-moving-dot" />
-                        </div>
+                        <button
+                            type="button"
+                            onClick={
+                                startJourney
+                            }
+                            className={`journey-button ${
+                                journeyStarted
+                                    ? "journey-button-active"
+                                    : ""
+                            }`}
+                        >
 
-                        <div className="route-point">
-
-                            <MapPin
-                                size={21}
+                            <Sparkles
+                                size={17}
                             />
 
-                            <small>
-                                DESTINATION
-                            </small>
+                            <span>
+                                {journeyStarted
+                                    ? "Journey Started"
+                                    : "Start Journey"}
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                    {/* =========================================
+                        EXISTING SEARCH FIELDS
+                        NOW INSIDE JOURNEY CARD
+                    ========================================= */}
+
+                    <div className="journey-search-area">
+
+                        <div className="bus-search-grid">
+
+                            {/* =========================================
+                                FROM + TO
+                            ========================================= */}
+
+                            <div className="from-to-wrapper">
+
+                                {/* FROM */}
+
+                                <div className="city-field-wrapper">
+
+                                    <div
+                                        className={`city-field ${
+                                            activeField ===
+                                            "from"
+                                                ? "city-field-active"
+                                                : ""
+                                        }`}
+                                    >
+
+                                        <BusIcon />
+
+                                        <div className="city-input-content">
+
+                                            <div className="field-label">
+                                                FROM
+                                            </div>
+
+                                            <input
+                                                type="text"
+                                                value={from}
+                                                onChange={(event) => {
+                                                    setFrom(
+                                                        event
+                                                            .target
+                                                            .value
+                                                    );
+
+                                                    setActiveField(
+                                                        "from"
+                                                    );
+                                                }}
+                                                onFocus={() =>
+                                                    setActiveField(
+                                                        "from"
+                                                    )
+                                                }
+                                                placeholder="Enter departure city"
+                                                className="city-input"
+                                            />
+
+                                            <div className="field-helper">
+                                                Select departure
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    {/* FROM SUGGESTIONS */}
+
+                                    {activeField ===
+                                        "from" &&
+                                        filteredFromCities.length >
+                                            0 && (
+                                            <div className="city-suggestions">
+
+                                                {filteredFromCities.map(
+                                                    (
+                                                        city
+                                                    ) => (
+                                                        <button
+                                                            key={`${city.city}-${city.state}`}
+                                                            type="button"
+                                                            onClick={() =>
+                                                                selectCity(
+                                                                    city,
+                                                                    "from"
+                                                                )
+                                                            }
+                                                            className="city-suggestion"
+                                                        >
+
+                                                            <MapPin
+                                                                size={
+                                                                    17
+                                                                }
+                                                            />
+
+                                                            <div>
+
+                                                                <div className="suggestion-city">
+                                                                    {
+                                                                        city.city
+                                                                    }
+                                                                </div>
+
+                                                                <div className="suggestion-state">
+                                                                    {
+                                                                        city.state
+                                                                    }
+                                                                </div>
+
+                                                            </div>
+
+                                                        </button>
+                                                    )
+                                                )}
+
+                                            </div>
+                                        )}
+
+                                </div>
+
+                                {/* TO */}
+
+                                <div className="city-field-wrapper">
+
+                                    <div
+                                        className={`city-field ${
+                                            activeField ===
+                                            "to"
+                                                ? "city-field-active"
+                                                : ""
+                                        }`}
+                                    >
+
+                                        <BusIcon />
+
+                                        <div className="city-input-content">
+
+                                            <div className="field-label">
+                                                TO
+                                            </div>
+
+                                            <input
+                                                type="text"
+                                                value={to}
+                                                onChange={(event) => {
+                                                    setTo(
+                                                        event
+                                                            .target
+                                                            .value
+                                                    );
+
+                                                    setActiveField(
+                                                        "to"
+                                                    );
+                                                }}
+                                                onFocus={() =>
+                                                    setActiveField(
+                                                        "to"
+                                                    )
+                                                }
+                                                placeholder="Enter destination city"
+                                                className="city-input"
+                                            />
+
+                                            <div className="field-helper">
+                                                Select destination
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    {/* TO SUGGESTIONS */}
+
+                                    {activeField ===
+                                        "to" &&
+                                        filteredToCities.length >
+                                            0 && (
+                                            <div className="city-suggestions">
+
+                                                {filteredToCities.map(
+                                                    (
+                                                        city
+                                                    ) => (
+                                                        <button
+                                                            key={`${city.city}-${city.state}`}
+                                                            type="button"
+                                                            onClick={() =>
+                                                                selectCity(
+                                                                    city,
+                                                                    "to"
+                                                                )
+                                                            }
+                                                            className="city-suggestion"
+                                                        >
+
+                                                            <MapPin
+                                                                size={
+                                                                    17
+                                                                }
+                                                            />
+
+                                                            <div>
+
+                                                                <div className="suggestion-city">
+                                                                    {
+                                                                        city.city
+                                                                    }
+                                                                </div>
+
+                                                                <div className="suggestion-state">
+                                                                    {
+                                                                        city.state
+                                                                    }
+                                                                </div>
+
+                                                            </div>
+
+                                                        </button>
+                                                    )
+                                                )}
+
+                                            </div>
+                                        )}
+
+                                </div>
+
+                                {/* SWAP */}
+
+                                <button
+                                    type="button"
+                                    onClick={
+                                        swapLocations
+                                    }
+                                    title="Swap locations"
+                                    className="swap-button"
+                                >
+                                    <ArrowRightLeft
+                                        size={16}
+                                    />
+                                </button>
+
+                            </div>
+
+                            {/* =========================================
+                                WOMEN ONLY + DATE
+                            ========================================= */}
+
+                            <div className="date-section">
+
+                                {/* WOMEN ONLY */}
+
+                                <div className="women-toggle-row">
+
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            setWomenOnly(
+                                                !womenOnly
+                                            )
+                                        }
+                                        className={`women-toggle ${
+                                            womenOnly
+                                                ? "women-toggle-active"
+                                                : ""
+                                        }`}
+                                    >
+
+                                        <WomanIcon
+                                            active={
+                                                womenOnly
+                                            }
+                                        />
+
+                                        <span
+                                            className={`women-text ${
+                                                womenOnly
+                                                    ? "women-text-active"
+                                                    : ""
+                                            }`}
+                                        >
+                                            Booking For Women
+                                        </span>
+
+                                        <span
+                                            className={`toggle-switch ${
+                                                womenOnly
+                                                    ? "toggle-switch-active"
+                                                    : ""
+                                            }`}
+                                        >
+
+                                            <span
+                                                className={`toggle-circle ${
+                                                    womenOnly
+                                                        ? "toggle-circle-active"
+                                                        : ""
+                                                }`}
+                                            />
+
+                                        </span>
+
+                                    </button>
+
+                                </div>
+
+                                {/* TRAVEL DATE */}
+
+                                <div className="date-field-wrapper">
+
+                                    <div className="date-field">
+
+                                        <button
+                                            type="button"
+                                            onClick={
+                                                openCalendar
+                                            }
+                                            title="Select travel date"
+                                            className="calendar-icon-button"
+                                        >
+                                            <CalendarDays
+                                                size={20}
+                                                strokeWidth={
+                                                    2
+                                                }
+                                            />
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            onClick={
+                                                openCalendar
+                                            }
+                                            className="date-text-button"
+                                        >
+
+                                            <span className="date-label">
+                                                TRAVEL DATE
+                                            </span>
+
+                                            <span className="date-value">
+
+                                                {date ===
+                                                todayString
+                                                    ? "Today"
+                                                    : date ===
+                                                      tomorrowString
+                                                    ? "Tomorrow"
+                                                    : selectedDate.toLocaleDateString(
+                                                          "en-IN",
+                                                          {
+                                                              day: "2-digit",
+                                                              month: "short",
+                                                              year: "numeric",
+                                                          }
+                                                      )}
+
+                                            </span>
+
+                                        </button>
+
+                                        {/* TODAY / TOMORROW */}
+
+                                        <div className="quick-date-buttons">
+
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setSelectedDate(
+                                                        new Date(
+                                                            today
+                                                        )
+                                                    );
+
+                                                    setDate(
+                                                        todayString
+                                                    );
+                                                }}
+                                                className={`quick-date-button ${
+                                                    date ===
+                                                    todayString
+                                                        ? "quick-date-active"
+                                                        : ""
+                                                }`}
+                                            >
+                                                Today
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setSelectedDate(
+                                                        new Date(
+                                                            tomorrowDate
+                                                        )
+                                                    );
+
+                                                    setDate(
+                                                        tomorrowString
+                                                    );
+                                                }}
+                                                className={`quick-date-button ${
+                                                    date ===
+                                                    tomorrowString
+                                                        ? "quick-date-active"
+                                                        : ""
+                                                }`}
+                                            >
+                                                Tomorrow
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                    {/* =========================================
+                                        CALENDAR
+                                    ========================================= */}
+
+                                    {calendarOpen && (
+                                        <div className="calendar-popup">
+
+                                            {/* HEADER */}
+
+                                            <div className="calendar-header">
+
+                                                <button
+                                                    type="button"
+                                                    onClick={
+                                                        previousMonth
+                                                    }
+                                                    className="calendar-nav-button"
+                                                >
+                                                    <ChevronLeft
+                                                        size={
+                                                            18
+                                                        }
+                                                    />
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        setShowYears(
+                                                            !showYears
+                                                        )
+                                                    }
+                                                    className="calendar-month-button"
+                                                >
+
+                                                    {months[
+                                                        calendarMonth
+                                                    ]}{" "}
+                                                    {
+                                                        calendarYear
+                                                    }
+
+                                                    <ChevronDown
+                                                        size={
+                                                            15
+                                                        }
+                                                    />
+
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    onClick={
+                                                        nextMonth
+                                                    }
+                                                    className="calendar-nav-button"
+                                                >
+                                                    <ChevronRight
+                                                        size={
+                                                            18
+                                                        }
+                                                    />
+                                                </button>
+
+                                            </div>
+
+                                            {/* YEARS */}
+
+                                            {showYears ? (
+                                                <div className="years-grid">
+
+                                                    {years.map(
+                                                        (
+                                                            year
+                                                        ) => (
+                                                            <button
+                                                                key={
+                                                                    year
+                                                                }
+                                                                type="button"
+                                                                onClick={() => {
+                                                                    setCalendarYear(
+                                                                        year
+                                                                    );
+
+                                                                    setShowYears(
+                                                                        false
+                                                                    );
+                                                                }}
+                                                                className={`year-button ${
+                                                                    year ===
+                                                                    calendarYear
+                                                                        ? "year-button-active"
+                                                                        : ""
+                                                                }`}
+                                                            >
+                                                                {
+                                                                    year
+                                                                }
+                                                            </button>
+                                                        )
+                                                    )}
+
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    {/* WEEK DAYS */}
+
+                                                    <div className="week-days">
+
+                                                        {[
+                                                            "Sun",
+                                                            "Mon",
+                                                            "Tue",
+                                                            "Wed",
+                                                            "Thu",
+                                                            "Fri",
+                                                            "Sat",
+                                                        ].map(
+                                                            (
+                                                                day
+                                                            ) => (
+                                                                <div
+                                                                    key={
+                                                                        day
+                                                                    }
+                                                                    className="week-day"
+                                                                >
+                                                                    {
+                                                                        day
+                                                                    }
+                                                                </div>
+                                                            )
+                                                        )}
+
+                                                    </div>
+
+                                                    {/* DAYS */}
+
+                                                    <div className="calendar-days">
+
+                                                        {calendarDays.map(
+                                                            (
+                                                                item,
+                                                                index
+                                                            ) => {
+
+                                                                const past =
+                                                                    isPastDate(
+                                                                        item.date
+                                                                    );
+
+                                                                const selected =
+                                                                    isSameDate(
+                                                                        item.date,
+                                                                        selectedDate
+                                                                    );
+
+                                                                const isToday =
+                                                                    isSameDate(
+                                                                        item.date,
+                                                                        today
+                                                                    );
+
+                                                                return (
+                                                                    <button
+                                                                        key={`${item.date.toISOString()}-${index}`}
+                                                                        type="button"
+                                                                        disabled={
+                                                                            past
+                                                                        }
+                                                                        onClick={() =>
+                                                                            selectDate(
+                                                                                item.date
+                                                                            )
+                                                                        }
+                                                                        className={`calendar-day ${
+                                                                            past
+                                                                                ? "calendar-day-past"
+                                                                                : selected
+                                                                                ? "calendar-day-selected"
+                                                                                : isToday
+                                                                                ? "calendar-day-today"
+                                                                                : item.currentMonth
+                                                                                ? "calendar-day-current"
+                                                                                : "calendar-day-other"
+                                                                        }`}
+                                                                    >
+                                                                        {
+                                                                            item
+                                                                                .date
+                                                                                .getDate()
+                                                                        }
+                                                                    </button>
+                                                                );
+                                                            }
+                                                        )}
+
+                                                    </div>
+                                                </>
+                                            )}
+
+                                        </div>
+                                    )}
+
+                                </div>
+
+                            </div>
 
                         </div>
 
                     </div>
-
-                    {/* START JOURNEY */}
-
-                    <button
-                        type="button"
-                        onClick={
-                            startJourney
-                        }
-                        className={`journey-button ${
-                            journeyStarted
-                                ? "journey-button-active"
-                                : ""
-                        }`}
-                    >
-
-                        <Sparkles
-                            size={17}
-                        />
-
-                        <span>
-                            {journeyStarted
-                                ? "Journey Started"
-                                : "Start Journey"}
-                        </span>
-
-                    </button>
 
                 </div>
 
